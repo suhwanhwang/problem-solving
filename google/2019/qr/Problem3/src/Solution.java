@@ -74,39 +74,57 @@ public class Solution {
     }
 
     private static void solve(int n, int[] cipher) {
-        //int[] allPrimeNumbers = sieveOfEratosthenes(n);
         TreeSet<Integer> primeSet = new TreeSet<>();
         List<Integer> decryptNumbers = new ArrayList<>();
 
-        int cur = 0;
-        int next = 0;
+        int first = 0;
+        int second = 0;
         for (int p = 2; p <= n; ++p) {
             if (cipher[0] % p == 0) {
-                cur = p;
-                next = cipher[0] / p;
+                first = p;
+                second = cipher[0] / p;
                 break;
             }
         }
 
-        if (cipher[1] % next != 0) {
-            int tmp = cur;
-            cur = next;
-            next = tmp;
+        if (cipher[1] % second != 0) {
+            int tmp = first;
+            first = second;
+            second = tmp;
         }
 
-        primeSet.add(cur);
-        decryptNumbers.add(cur);
+        primeSet.add(first);
+        decryptNumbers.add(first);
 
-        primeSet.add(next);
-        decryptNumbers.add(next);
-
+        primeSet.add(second);
+        decryptNumbers.add(second);
 
         for (int i = 1; i < cipher.length; ++i) {
-            int tmp = cipher[i] / next;
-            primeSet.add(tmp);
-            decryptNumbers.add(tmp);
-            next = tmp;
+            int next = 0;
+            if (cipher[i - 1] == cipher[i]) {
+                int p0 = 0;
+                int p1 = 0;
+                for (int p = 2; p <= n; ++p) {
+                    if (cipher[0] % p == 0) {
+                        p0 = p;
+                        p1 = cipher[0] / p;
+                        break;
+                    }
+                }
+                int prev = decryptNumbers.get(decryptNumbers.size() - 1);
+                next = (prev == p0 ? p1 : p0);
+            } else {
+                int gcd = gcd(cipher[i - 1], cipher[i]);
+                next = cipher[i] / gcd;
+            }
+
+            primeSet.add(next);
+            decryptNumbers.add(next);
         }
+
+//        if (primeSet.size() != 26) {
+//            throw new RuntimeException();
+//        }
 
         HashMap<Integer, Character> dic = new HashMap<>();
         char cc = 'A';
@@ -119,7 +137,26 @@ public class Solution {
         System.out.println();
     }
 
+    static boolean isPrime(int n) {
+        // Corner case
+        if (n <= 1)
+            return false;
 
+        // Check from 2 to n-1
+        for (int i = 2; i < n; i++)
+            if (n % i == 0)
+                return false;
+
+        return true;
+    }
+
+    private static int gcd(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+
+        return gcd(b % a, a);
+    }
 
 
     // https://www.geeksforgeeks.org/sieve-of-eratosthenes/
