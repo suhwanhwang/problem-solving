@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "unordered_map": "cpp",
+        "numeric": "cpp",
+        "tuple": "cpp",
+        "regex": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "climits": "cpp",
+        "cmath": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "stack": "cpp"
+    }
+}

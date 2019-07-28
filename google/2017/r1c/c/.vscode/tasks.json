@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "g++",
+    "isShellCommand": true,
+    "args": ["-std=c++11", "-Wall", "c.cpp"],
+    "showOutput": "always",
+    "echoCommand": true,
+    "tasks" : [
+        {
+            "taskName": "Debug",
+            "args": [
+                "-g"
+            ],
+            "suppressTaskName": true,
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "Release",
+            "args": [
+                "-O2"
+            ],
+            "suppressTaskName": true
+        }
+    ]
+}

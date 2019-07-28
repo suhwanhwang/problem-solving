@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "complex": "cpp",
+        "scoped_allocator": "cpp",
+        "type_traits": "cpp",
+        "bitset": "cpp"
+    }
+}
