@@ -59,6 +59,7 @@ int solve(int remain, int cur) {
     int &ans = dp[remain][cur];
     if (ans != -1) return ans;
     
+    ans = 0;
     for(int i = 0; i <= coin[cur].second; ++i) {
         ans += solve(remain - coin[cur].first*i, cur + 1);
     }
