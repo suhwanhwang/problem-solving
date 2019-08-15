@@ -38,70 +38,115 @@ using namespace std;
 
 typedef long long ll;
 typedef long double ld;
-const int dir[][2] = {{0,1}, {1,0}, {0, -1}, {-1, 0}};
+
+int n, m;
 vector<string> board;
 
-bool solveSub(pair<int, int> s, pair<int, int> prev, pair<int, int> cur) {
-    if (s == cur) {
-        return true;
-    }
-    
-    int r = cur.first;
-    int c = cur.second;
-    
-    if (r < 0 || r >= board.size() ||
-    c < 0 || c >= board[r].size()) {
-        return false;
-    }
-    
-    if (board[s.first][s.second] != board[r][c]) {
-        return false;
-    }
-    
-    for (int d = 0; d < 4; ++d) {
-        int next_r = r+dir[d][0];
-        int next_c = c+dir[d][1];
-        if (prev.first == next_r && prev.second == next_c) {
-            continue;
-        }
-        if (solveSub(s, {r, c}, {next_r, next_c})) {
-            return true;
-        }
-    }
-    return false;
-}
+// https://www.geeksforgeeks.org/detect-cycle-undirected-graph/
+// Class for an undirected graph 
+class Graph 
+{ 
+    int V;    // No. of vertices 
+    vector<vector<int>> adj;    // Pointer to an array containing adjacency lists 
+    bool isCyclicUtil(int v, bool visited[], int parent); 
+public: 
+    Graph(int V);   // Constructor 
+    void addEdge(int v, int w);   // to add an edge to graph 
+    bool isCyclic();   // returns true if there is a cycle 
+}; 
+  
+Graph::Graph(int V) 
+{ 
+    this->V = V; 
+    adj.clear();
+    adj.resize(V); 
+} 
+  
+void Graph::addEdge(int v, int w) 
+{ 
+    adj[v].push_back(w); // Add w to v’s list. 
+    adj[w].push_back(v); // Add v to w’s list. 
+} 
+  
+// A recursive function that uses visited[] and parent to detect 
+// cycle in subgraph reachable from vertex v. 
+bool Graph::isCyclicUtil(int v, bool visited[], int parent) 
+{ 
+    // Mark the current node as visited 
+    visited[v] = true; 
+  
+    // Recur for all the vertices adjacent to this vertex 
+    vector<int>::iterator i; 
+    for (i = adj[v].begin(); i != adj[v].end(); ++i) 
+    { 
+        // If an adjacent is not visited, then recur for that adjacent 
+        if (!visited[*i]) 
+        { 
+           if (isCyclicUtil(*i, visited, v)) 
+              return true; 
+        } 
+  
+        // If an adjacent is visited and not parent of current vertex, 
+        // then there is a cycle. 
+        else if (*i != parent) 
+           return true; 
+    } 
+    return false; 
+} 
+  
+// Returns true if the graph contains a cycle, else false. 
+bool Graph::isCyclic() 
+{ 
+    // Mark all the vertices as not visited and not part of recursion 
+    // stack 
+    bool *visited = new bool[V]; 
+    for (int i = 0; i < V; i++) 
+        visited[i] = false; 
+  
+    // Call the recursive helper function to detect cycle in different 
+    // DFS trees 
+    for (int u = 0; u < V; u++) 
+        if (!visited[u]) // Don't recur for u if it is already visited 
+          if (isCyclicUtil(u, visited, -1)) 
+             return true; 
+  
+    return false; 
+} 
 
 bool solve() {
-    for (int i = 0; i < (int)board.size(); ++i) {
-        for (int j = 0; j < (int)board[i].size(); ++j) {
-            for (int d = 0; d < 4; ++d) {
-                //cout << i << j << d << endl;
-                
-                if (solveSub({i, j}, {i, j}, {i+dir[d][0], j+dir[d][1]})) {
-                    return true;
-                }
+    // make graph
+    Graph g1(n * m); 
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            int index = m * i + j;
+
+            // right
+            if (j + 1 < m && board[i][j] == board[i][j + 1]) {
+                g1.addEdge(index, index+1);
+            }
+
+            // down
+            if (i + 1 < n && board[i][j] == board[i + 1][j]) {
+                g1.addEdge(index, index + m);
             }
         }
     }
-    return false;
+    
+    return g1.isCyclic();
 }
 
 int main(void) {
     ios_base::sync_with_stdio(false);
 
-    int n, m;
     cin >> n >> m;
-    
+
     for (int i = 0; i < n; ++i) {
         string s;
         cin >> s;
         board.push_back(s);
     }
-    /*
-    for(string s : board) {
-        cout << s << endl;
-    }
-    */
+
     cout << (solve() ? "Yes" : "No") << endl;
     return 0;
 }
