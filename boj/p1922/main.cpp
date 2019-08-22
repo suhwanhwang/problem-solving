@@ -67,7 +67,7 @@ struct DisjointSet {
   }
 };
 
-const int MAX_V = 1000;
+const int MAX_V = 1000+1;
 
 // 정점의 개수
 int V;
@@ -76,8 +76,8 @@ vector<pair<int,int> > adj[MAX_V];
 
 // 주어진 그래프에 대해 최소 스패닝 트리에 포함된 간선의 목록을 selected 에
 // 저장하고, 가중치의 합을 반환한다.
-int kruskal(vector<pair<int,int> >& selected) {
-  int ret = 0;
+ll kruskal(vector<pair<int,int> >& selected) {
+  ll ret = 0;
   selected.clear();
 
   // (가중치, (정점1, 정점2)) 의 목록을 얻는다
@@ -106,7 +106,7 @@ int kruskal(vector<pair<int,int> >& selected) {
   return ret;
 }
 
-int solve() {
+ll solve() {
     vector<pair<int,int> > selected;
     return kruskal(selected);
 }
@@ -120,6 +120,7 @@ int main(void) {
     for (int i = 0; i < m; ++i) {
         int a, b, c;
         cin >> a >> b >> c;
+        a--;b--;
         adj[a].push_back({b, c});
         adj[b].push_back({a, c});
     }
