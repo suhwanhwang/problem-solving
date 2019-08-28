@@ -39,7 +39,8 @@ using namespace std;
 typedef long long ll;
 typedef long double ld;
 
-const int MAX_N = 10;
+const int MAX_N = 1000;
+const int MARK = 0xFF;
 const pair<int,int> DIR[] = {{0,1}, {1,0}, {-1,0}, {0,-1}};
 
 int N, M, H, W, Sr, Sc, Fr, Fc;
@@ -69,20 +70,25 @@ int solveSub(int r, int c, int r0, int c0) {
         return 1;
     }
 
+    B[r][c] = MARK; // mark
+
     int ans = INT_MAX;
     for (int i = 0; i < 4; ++i) {
         int next_r = r + DIR[i].first;
         int next_c = c + DIR[i].second;
-        if (next_r == r0 && next_c == c0) {
+        if ((next_r == r0 && next_c == c0)
+        || B[next_r][next_c] == MARK) {
             continue;
         }
+
         int tmp = solveSub(next_r, next_c, r, c);
         if (tmp < 0) {
             continue;
         }
-        
+
         ans = min(ans, 1 + tmp);
     }
+    B[r][c] = 0; // unmark
     return ans;
 }
 int solve() {
