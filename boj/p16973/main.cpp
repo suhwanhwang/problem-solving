@@ -40,7 +40,6 @@ typedef long long ll;
 typedef long double ld;
 
 const int MAX_N = 1000;
-const int MARK = 0xFF;
 const pair<int,int> DIR[] = {{0,1}, {1,0}, {-1,0}, {0,-1}};
 
 int N, M, H, W, Sr, Sc, Fr, Fc;
@@ -61,47 +60,37 @@ bool isOk(int r, int c) {
     return true;
 }
 
-int solveSub(int r, int c, int r0, int c0) {
-    if (isOk(r, c) == false) {
-        return -1;
-    }
-
-    if (r == Fr && c == Fc) {
-        return 1;
-    }
-
-    B[r][c] = MARK; // mark
-
-    int ans = INT_MAX;
-    for (int i = 0; i < 4; ++i) {
-        int next_r = r + DIR[i].first;
-        int next_c = c + DIR[i].second;
-        if ((next_r == r0 && next_c == c0)
-        || B[next_r][next_c] == MARK) {
-            continue;
+// start 에서 시작해 그래프를 너비 우선 탐색하고 각 정점의 방문 순서를 반환한다.
+int bfs() {
+    // 각 정점의 방문 여부
+    vector<vector<bool>> discovered(N, vector<bool>(M,false));
+    // 방문할 정점 목록을 유지하는 
+    queue<pair<int,int>> q; 
+    // 정점의 방문 순서
+    vector<pair<int,int>> order;
+    discovered[Sr][Sc] = true;
+    q.push({Sr,Sc});
+    while(!q.empty()) {
+        pair<int,int> here = q.front();
+        q.pop();
+        // here를 방문한다.
+        order.push_back(here);
+        //cout << here.first << "," << here.second << " ";
+        // 모든 인접한 정점을 검사한다.
+        for (int i = 0; i < 4; ++i) {
+            int next_r = here.first + DIR[i].first;
+            int next_c = here.second + DIR[i].second;
+            if (next_r == Fr && next_c == Fc) {
+                return order.size();
+            }
+            
+            if (isOk(next_r, next_c) && !discovered[next_r][next_c]) {
+                q.push({next_r, next_c});
+                discovered[next_r][next_c] = true;
+            }
         }
-
-        int tmp = solveSub(next_r, next_c, r, c);
-        if (tmp < 0) {
-            continue;
-        }
-
-        ans = min(ans, 1 + tmp);
     }
-    B[r][c] = 0; // unmark
-    return ans;
-}
-int solve() {
-    int ans = INT_MAX;
-
-    for (int i = 0; i < 4; ++i) {
-        int tmp = solveSub(Sr + DIR[i].first, Sc + DIR[i].second, Sr, Sc);
-        if (tmp < 0) {
-            continue;
-        }
-        ans = min(ans, tmp);
-    }
-    return ans;
+    return -1;
 }
 
 int main(void) {
@@ -115,6 +104,6 @@ int main(void) {
     }
     cin >> H >> W >> Sr >> Sc >> Fr >> Fc;
     Sr--;Sc--;Fr--;Fc--;
-    cout << solve() << endl;
+    cout << bfs() << endl;
     return 0;
 }
