@@ -44,17 +44,12 @@ const pair<int,int> DIR[] = {{0,1}, {1,0}, {-1,0}, {0,-1}};
 
 int N, M, H, W, Sr, Sc, Fr, Fc;
 int B[MAX_N + 1][MAX_N +1];
+int RS[MAX_N + 1][MAX_N +1];
 
 bool isOk(int r, int c) {
-    if (r < 0 || c < 0 || r + H > N || c + W > M) {
-        return false;
-    }
-
     for (int i = 0; i < H; ++i) {
-        for (int j = 0; j < W; ++j) {
-            if (B[r + i][c + j] == 1) {
-                return false;
-            } 
+        if (RS[r + i][c + W - 1] - (c == 0 ? 0 : RS[r + i][c - 1]) > 0) {
+            return false;
         }
     }
     return true;
@@ -68,25 +63,33 @@ int bfs() {
     queue<pair<int,int>> q; 
     // 정점의 방문 순서
     vector<pair<int,int>> order;
+    queue<int> depth;
     discovered[Sr][Sc] = true;
     q.push({Sr,Sc});
+    depth.push(0);
     while(!q.empty()) {
         pair<int,int> here = q.front();
         q.pop();
+        int d = depth.front(); 
+        depth.pop();
         // here를 방문한다.
         order.push_back(here);
         //cout << here.first << "," << here.second << " ";
         // 모든 인접한 정점을 검사한다.
         for (int i = 0; i < 4; ++i) {
-            int next_r = here.first + DIR[i].first;
-            int next_c = here.second + DIR[i].second;
-            if (next_r == Fr && next_c == Fc) {
-                return order.size();
+            int r = here.first + DIR[i].first;
+            int c = here.second + DIR[i].second;
+            if (r == Fr && c == Fc) {
+                return d+1;
+            }
+            if (r < 0 || c < 0 || r + H > N || c + W > M) {
+                continue;
             }
             
-            if (isOk(next_r, next_c) && !discovered[next_r][next_c]) {
-                q.push({next_r, next_c});
-                discovered[next_r][next_c] = true;
+            if (!discovered[r][c] && isOk(r, c)) {
+                q.push({r, c});
+                depth.push(d+1);
+                discovered[r][c] = true;
             }
         }
     }
@@ -104,6 +107,16 @@ int main(void) {
     }
     cin >> H >> W >> Sr >> Sc >> Fr >> Fc;
     Sr--;Sc--;Fr--;Fc--;
+    
+    //memset(OK, -1, sizeof(OK));
+    for (int i = 0; i < N; ++i) {
+        int sum = 0;
+        for (int j = 0; j < M; ++j) {
+            sum += B[i][j];
+            RS[i][j] = sum;
+        }
+    }
+    
     cout << bfs() << endl;
     return 0;
 }
