@@ -51,7 +51,7 @@ void setPaperBit(int r, int c, int s) {
         return;
     }
     
-    int num = (kNUM[s] << r);
+    int num = (kNUM[s] << c);
     for (int i = r; i < r + s; ++i) {
         paper[i] |= num;
     } 
@@ -62,7 +62,7 @@ void clearPaperBit(int r, int c, int s) {
         return;
     }
     
-    int num = (kNUM[s] << r);
+    int num = (kNUM[s] << c);
     for (int i = r; i < r + s; ++i) {
         paper[i] &= ~num;
     } 
@@ -77,7 +77,7 @@ bool isOK(int r, int c, int s) {
         return false;
     }
     
-    int num = (kNUM[s] << r);
+    int num = (kNUM[s] << c);
     for (int i = r; i < r + s; ++i) {
         if ((paper[i] & num) != num) {
             return false;
@@ -108,22 +108,22 @@ int solveSub(int row, int col) {
                 c = j;
                 break;
             }
-            if (r!=-1&&c!=-1) {
-                break;
-            }
+        }
+        if (r!=-1 && c!=-1) { // found
+            break;
         }
     }
     if (r ==-1 && c == -1) { // not found
         return 0;
     }
     
-    cout<<r<<","<<c<<endl;
-    int ans = INT_MAX;
+    //cout<<r<<","<<c<<endl;
+    int ans = 987654321;
     for (int i = 1; i <= kCOLOR_MAX; ++i) {
         if (isOK(r, c, i)) {
             clearPaperBit(r, c, i);
             numColor[i]--;
-            ans = min(ans, 1 + solveSub(r+i, c));
+            ans = min(ans, 1 + solveSub(r, c+i));
             numColor[i]++;
             setPaperBit(r, c, i);
         }
@@ -149,10 +149,6 @@ int main(void) {
                 paper[r] |= (1<<c);
             }
         }
-    }
-    
-    for(int r = 0; r < kMAX; ++r) {
-        cout<<paper[r]<<endl;
     }
 
     cout << solve() << endl;
