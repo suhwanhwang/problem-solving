@@ -39,6 +39,7 @@ using namespace std;
 typedef long long ll;
 typedef long double ld;
 
+const int kINF = 987654321;
 const int kMAX = 10;
 const int kCOLOR_MAX = 5;
 const int kNUM[]={0b0,0b1,0b11,0b111,0b1111,0b11111};
@@ -87,22 +88,16 @@ bool isOK(int r, int c, int s) {
 } 
 
 int solveSub(int row, int col) {
-    if (row >= kMAX || col >= kMAX) {
-        return 0;
-    }
-    
     // find 1
     int r = -1;
     int c = -1;
     for (int i = row; i < kMAX; ++i) {
-        //cout<<"row"<<i<<" "<<paper[i]<<endl;
         if (paper[i] == 0) {
             continue;
         }
         int sc = (i==row ? col : 0);
         for (int j = sc; j < kMAX; ++j) {
             int tmp = (1<<j);
-            //cout << "col"<<j<<" "<<tmp<<endl;
             if ((paper[i] & tmp) == tmp) {
                 r = i;
                 c = j;
@@ -117,9 +112,8 @@ int solveSub(int row, int col) {
         return 0;
     }
     
-    //cout<<r<<","<<c<<endl;
-    int ans = 987654321;
-    for (int i = 1; i <= kCOLOR_MAX; ++i) {
+    int ans = kINF;
+    for (int i = kCOLOR_MAX; i >= 1; --i) {
         if (isOK(r, c, i)) {
             clearPaperBit(r, c, i);
             numColor[i]--;
@@ -135,7 +129,7 @@ int solveSub(int row, int col) {
 
 int solve() {
     int ans = solveSub(0,0);
-    return ans == INT_MAX ? -1 : ans;
+    return ans == kINF ? -1 : ans;
 }
 
 int main(void) {
