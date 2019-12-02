@@ -48,7 +48,7 @@ int main(void) {
 
     int n;
     cin >> n;
-    
+
     cout << solve(n) << endl;
     return 0;
 }
