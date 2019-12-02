@@ -39,8 +39,6 @@ using namespace std;
 typedef long long ll;
 typedef long double ld;
 
-int gcd(int a, int b) {return b == 0 ? a : gcd(b, a%b);}
-
 int solve(int n) {
     return 0;
 }
