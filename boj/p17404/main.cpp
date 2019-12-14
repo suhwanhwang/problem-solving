@@ -19,15 +19,15 @@ int solveSub(int index, int color, int lastColor) {
   if (index < 0) return 0;
   
   int &ans = dp[index][color];
-  if (ans != -1) return ans;
+  //if (ans != -1) return ans;
   
   int c1 = (color + 1) % 3;
   int c2 = (color + 2) % 3;
   
-  if (index == 0 && c1 == lastColor) {
+  if (index == 1 && c1 == lastColor) {
     ans = cost[index][color] 
       + solveSub(index-1, c2, lastColor);
-  } else if (index == 0 && c2 == lastColor) {
+  } else if (index == 1 && c2 == lastColor) {
     ans = cost[index][color] 
       + solveSub(index-1, c1, lastColor);
   } else {
