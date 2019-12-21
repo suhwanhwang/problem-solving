@@ -40,15 +40,15 @@ typedef long long ll;
 typedef long double ld;
 
 int solve(int n) {
-    return 0;
+  return 0;
 }
 
 int main(void) {
-    ios_base::sync_with_stdio(false);
+  ios_base::sync_with_stdio(false);
 
-    int n;
-    cin >> n;
+  int n;
+  cin >> n;
 
-    cout << solve(n) << endl;
-    return 0;
+  cout << solve(n) << endl;
+  return 0;
 }
