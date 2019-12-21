@@ -38,41 +38,7 @@ using namespace std;
 
 typedef long long ll;
 typedef long double ld;
-/*
-bool isLetter(const string&s){
-    //regex e("^([a-z0-9]+) ([a-z]+ ?)+");
-    //return regex_match(s, e);
-    bool id =true;
-    for(int i=0; i<s.size(); ++i){
-       if (isspace(s[i])){ 
-           id = false;
-       }
-       if(idisalnum(s[i]):isalpha(s[i]))) {
-          return false;
-       }
-    }
-    cout << s << " " << "true" << endl;
-    return true;
-}
 
-string getLog(const string&s){
-  return s.substr(s.find(" "));
-}
-
-bool cmp(const string&s1, const string&s2) {
-  bool t1=isLetter(s1);
-  bool t2=isLetter(s2);
-  if(t1==t2) {
-    if(isLetter(s1)) {
-      return getLog(s1).compare(getLog(s2)) <= 0;
-    } else {
-      return false;
-    }
-  } else {
-    return t1 ? true : false;
-  }
-}
-*/
 vector<string> split(const string &s) {
     vector<string> sp;
     stringstream ss(s);
