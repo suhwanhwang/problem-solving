@@ -44,40 +44,29 @@ const int kMAX = 200000 + 1;
 vector<int> adj[kMAX + 1];
 int N;
 bool visited[kMAX + 1];
-int parent[kMAX + 1];
-vector<pair<int, int>> depth;  // depth, node
+int sz[kMAX + 1];
+int det[kMAX + 1];
 
-void dfs(int node, int d) {
+int dfs(int node, int d) {
   visited[node] = true;
-  depth.push_back({d, node});
+  sz[node] = 1;
 
   for (auto next : adj[node]) {
     if (!visited[next]) {
-      parent[next] = node;
-      dfs(next, d + 1);
+      sz[node] += dfs(next, d + 1);
     }
   }
+  det[node] = sz[node] - d;
+  return sz[node];
 }
 
-int solve(int k) {
-  dfs(1, 0);
-  sort(depth.begin(), depth.end(), greater<pair<int, int>>());
-  map<int, int> m;
-
-  for (int i = 0; i < k; ++i) {
-    int node = depth[i].second;
-    if (m[node] == 0) {
-      int cur = parent[node];
-      while(cur > 0) {
-        m[cur]++;
-        cur = parent[cur];
-      }
-    } else {
-      m[node] = 0;
-
-    }
+ll solve(int k) {
+  dfs(1, 1);
+  sort(det + 1, det + N + 1, greater<int>());
+  ll sum = 0;
+  for (int i = 1; i <= N - k; ++i) {
+    sum += det[i];
   }
-  int sum = 0;
   return sum;
 }
 
