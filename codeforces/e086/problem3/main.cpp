@@ -40,28 +40,30 @@ using namespace std;
 typedef long long ll;
 typedef long double ld;
 
-ll gcd(ll a, ll b) {
-	return b ? gcd(b, a%b) : a;
-}
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+
+bool isOk(ll x, ll a, ll b) { return (x % a % b) != (x % b % a); }
 
 void solve(ll a, ll b, ll q) {
-  if (a > b) {
-    swap(a, b);
-  }
   ll lcm = a * b / gcd(a, b);
+  vector<int> map(lcm);
+  int count = 0;
+  for (int i = 0; i < lcm; ++i) {
+    if (isOk(i, a, b)) {
+      count++;
+      map[i] = count;
+    }
+  }
+
   for (int i = 0; i < q; ++i) {
     ll l, r;
     cin >> l >> r;
 
-    if (a == b) {
-      cout << 0;
-    } else if (r < lcm) {
-      cout << (r - b + 1 < 0 ? 0 : r - b + 1);
-    } else {
-      cout << (r - l + 1) - ((r - l) / lcm) * b;
-    }
-    cout << (i == q-1 ? '\n' : ' ');
+    ll countBeforeL = ((l - 1) / lcm) * count + map[(l - 1) % lcm];
+    ll countToR = (r / lcm) * count + map[r % lcm];
+    cout << (countToR - countBeforeL) << " ";
   }
+  cout << "\n";
 }
 
 int main(void) {
