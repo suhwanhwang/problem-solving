@@ -37,4 +37,30 @@ class Solution {
         int[][] dp = new int[nums.length][nums.length +1];
         return sub(nums,0,-1, dp);
     }
+
+
+    public int lengthOfLIS_dp(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        
+        for (int i = 1; i < nums.length; ++i) {
+            int max = 0;
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] < nums[i]) {
+                    max = Math.max(max, dp[j]);
+                }
+            }
+            dp[i] = max + 1;
+        }
+        
+        int maxLen = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            max = Math.max(maxLen, dp[i]);
+        }
+        return maxLen;
+    }
 }
