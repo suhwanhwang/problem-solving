@@ -18,7 +18,7 @@ It doesn't matter what you leave beyond the returned length.
 
 */
 class Solution {
-    public int removeDuplicates(int[] nums) {
+    public int removeDuplicates_1(int[] nums) {
         if (nums.length <= 1) {
             return nums.length;
         }
@@ -39,5 +39,20 @@ class Solution {
             }
         }
         return writePos;
+    }
+
+    public int removeDuplicates(int[] nums) {
+        if (nums.length <= 1) {
+            return nums.length;
+        }
+        
+        int writePos = 0;
+        for(int i = 1; i < nums.length; ++i) {
+            if (nums[writePos] != nums[i]) {
+                writePos++;
+                nums[writePos] = nums[i];
+            }
+        }
+        return writePos + 1;
     }
 }
