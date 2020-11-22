@@ -49,6 +49,27 @@ class Solution {
         }
         return total;
     }
+
+    public int trap_stack(int[] height) {
+        int ans = 0;
+        int cur = 0;
+        Stack<Integer> st = new Stack<Integer>();
+        while (cur < height.length) {
+            while (!st.isEmpty() && height[cur] > height[st.peek()]) {
+                int top = st.pop();
+                if (st.isEmpty()) {
+                    break;
+                }
+                
+                int d = cur - st.peek() - 1;
+                int h = Math.min(height[cur], height[st.peek()]) - height[top];
+                ans += d * h;
+            }
+            st.push(cur++);
+        }
+        
+        return ans;
+    }
     
     public int trap(int[] height) {
         if (height.length <= 2) {
