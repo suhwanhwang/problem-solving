@@ -16,11 +16,8 @@ Output: false
 Explanation: "a" does not match the entire string "aa".
 */
 
-
 class Solution {
-
-    // time out
-    private boolean isMatchSub(String s, String p, int si, int pi) {
+    private boolean isMatchSub(int[][] dp, String s, String p, int si, int pi) {
         //System.out.println("si : " + si + " pi: " + pi);
         if (si == s.length() && pi == p.length()) {
             return true;
@@ -29,27 +26,36 @@ class Solution {
             return false;
         }
         
+        if (dp[si][pi] != 0) {
+            return dp[si][pi] == 1;
+        }
+        
         char pc = p.charAt(pi);
         //System.out.println("pc : " + pc + " si: " + si);
         if (pc == '*') {
             for (int i = 0; i <= s.length() - si; ++i) {
-                if (isMatchSub(s, p, si + i, pi + 1)) {
+                if (isMatchSub(dp, s, p, si + i, pi + 1)) {
+                    dp[si][pi] = 1;
                     return true;
                 }
             }
-            return false;
+            dp[si][pi] = -1;
         } else if (pc == '?') {
-            return isMatchSub(s, p, si + 1, pi + 1);
+            dp[si][pi] = isMatchSub(dp, s, p, si + 1, pi + 1) ? 1 : -1;
+            
         } else {
             if (pc == s.charAt(si)) {
-                return isMatchSub(s, p, si + 1, pi + 1);
+                dp[si][pi] = isMatchSub(dp, s, p, si + 1, pi + 1) ? 1 : -1;
             } else {
-                return false;
+                dp[si][pi] = -1;
             }
         }
+        return dp[si][pi] == 1;
     }
     
     public boolean isMatch(String s, String p) {
-        return isMatchSub(s, p, 0, 0);
+        int[][] dp = new int[s.length()+1][p.length()+1];
+        
+        return isMatchSub(dp, s, p, 0, 0);
     }
 }
