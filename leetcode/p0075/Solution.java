@@ -31,7 +31,7 @@ Output: [1]
 */
 
 class Solution {
-    public void sortColors(int[] nums) {
+    public void sortColors_(int[] nums) {
         if (nums.length == 0) {
             return;
         }
@@ -48,5 +48,41 @@ class Solution {
             Arrays.fill(nums, start, start + count[i], i);
             start += count[i];
         }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    
+    private int partition(int[] nums, int s, int e) {
+        int v = nums[s];
+        
+        int i = s;
+        int p = s;
+        while (i <= e) {
+            if (nums[i] < v) {
+                p++;
+                swap(nums, p, i);
+            }
+            i++;
+        }
+        swap(nums, s, p);
+        return p;
+    }
+    private void qsort(int[] nums, int s, int e) {
+        if (s >= e) {
+            return;
+        }
+        int p = partition(nums, s, e);
+        qsort(nums, s, p - 1);
+        qsort(nums, p + 1, e);
+    }
+    public void sortColors(int[] nums) {
+        if (nums.length <= 1) {
+            return;
+        }
+        qsort(nums, 0, nums.length-1);
     }
 }
