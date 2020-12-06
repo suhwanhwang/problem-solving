@@ -56,29 +56,29 @@ class Solution {
         nums[j] = tmp;
     }
     
-    private int partition(int[] nums, int s, int e) {
-        int v = nums[s];
-        
-        int i = s;
-        int p = s;
-        while (i <= e) {
-            if (nums[i] < v) {
-                p++;
-                swap(nums, p, i);
+    private int partition(int[] nums, int start, int end) {
+        int value = nums[start];
+        int index = start;
+        for (int i = start + 1; i <= end; ++i) {
+            if (nums[i] <= value) {
+                index++;
+                swap(nums, index, i);
             }
-            i++;
         }
-        swap(nums, s, p);
-        return p;
+        swap(nums, start, index);
+        return index;
     }
-    private void qsort(int[] nums, int s, int e) {
-        if (s >= e) {
+    
+    private void qsort(int[] nums, int start, int end) {
+        if (start >= end) {
             return;
         }
-        int p = partition(nums, s, e);
-        qsort(nums, s, p - 1);
-        qsort(nums, p + 1, e);
+        
+        int p = partition(nums, start, end);
+        qsort(nums, start, p - 1);
+        qsort(nums, p + 1, end);
     }
+ 
     public void sortColors(int[] nums) {
         if (nums.length <= 1) {
             return;
