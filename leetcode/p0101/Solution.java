@@ -37,7 +37,7 @@ But the following [1,2,2,null,3,null,3] is not:
  * }
  */
 class Solution {
-    private boolean isSame(TreeNode left, TreeNode right) {
+    private boolean isMirror(TreeNode left, TreeNode right) {
         if (left == null && right == null) {
             return true;
         }
@@ -50,13 +50,13 @@ class Solution {
             return false;
         }
         
-        return isSame(left.left, right.right) && isSame(left.right, right.left);
+        return isMirror(left.left, right.right) && isMirror(left.right, right.left);
     }
     
     public boolean isSymmetric(TreeNode root) {
         if (root == null) {
             return true;
         }
-        return isSame(root.left, root.right);
+        return isMirror(root.left, root.right);
     }
 }
