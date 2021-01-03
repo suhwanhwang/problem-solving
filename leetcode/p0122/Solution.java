@@ -46,4 +46,16 @@ class Solution {
         Arrays.fill(dp, -1);
         return solve(prices, 0, dp);
     }
+
+    public int maxProfit_onepass(int[] prices) {
+        int total = 0;
+        
+        for (int i = 1; i < prices.length; ++i) {
+            if (prices[i-1] < prices[i]) {
+                total += prices[i] - prices[i - 1];
+            }
+        }
+        
+        return total;
+    }    
 }
