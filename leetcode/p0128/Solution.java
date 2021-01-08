@@ -25,7 +25,7 @@ Constraints:
 
 */
 class Solution {
-    public int longestConsecutive(int[] nums) {
+    public int longestConsecutive_nlogn(int[] nums) {
         if (nums.length < 2) {
             return nums.length;
         }
@@ -42,6 +42,27 @@ class Solution {
                 max = Math.max(max, len);
             } else {
                 len = 1;
+            }
+        }
+        return max;
+    }
+ 
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        
+        int max = 0;
+        for (int num : nums) {
+            if (!set.contains(num - 1)) {
+                int cur = num;
+                int len = 0;
+                while(set.contains(cur)) {
+                    len++;
+                    cur++;
+                }
+                max = Math.max(max, len);
             }
         }
         return max;
