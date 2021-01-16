@@ -28,7 +28,7 @@ Constraints:
 Each element in the array appears twice except for one element which appears only once.
 */
 class Solution {
-    public int singleNumber(int[] nums) {
+    public int singleNumber_(int[] nums) {
         Set<Integer> numSet = new HashSet<>();
         for (int num : nums) {
             if (numSet.contains(num)) {
@@ -38,5 +38,21 @@ class Solution {
             }
         }
         return (int)new ArrayList(numSet).get(0);
+    }
+    
+    public int singleNumber(int[] nums) {
+        Set<Integer> numSet = new HashSet<>();
+        int sum = 0;
+        int sumOnce = 0;
+        for (int num : nums) {
+            if (numSet.contains(num)) {
+                numSet.remove(num);
+            } else {
+                numSet.add(num);
+                sumOnce += num;
+            }
+            sum += num;
+        }
+        return 2 * sumOnce - sum;
     }
 }
