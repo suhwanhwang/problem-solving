@@ -48,7 +48,7 @@ pos is -1 or a valid index in the linked-list.
  */
 
 public class Solution {
-    public boolean hasCycle(ListNode head) {
+    public boolean hasCycle_set(ListNode head) {
         Set<ListNode> set = new HashSet<>();
         
         ListNode cur = head;
@@ -61,5 +61,22 @@ public class Solution {
             cur = cur.next;
         }
         return false;
+    }
+ 
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;
     }
 }
