@@ -26,63 +26,16 @@ class LRUCache {
         }
     };
     
-    Item head = null;
-    Item tail = null;
+    Item head = new Item(0, 0);
+    Item tail = new Item(0, 0);
     private void addHead(Item item) {
-        if (head != null) {
-            head.prev = item;
-            item.next = head;
-            head = item;
-        } else {
-            head = item;
-            tail = item;
-            item.prev  = item.next = null;
-        }
+        item.prev = head;
+        item.next = head.next;
+        head.next.prev = item;
+        head.next = item;
     }
     
-    private Item removeHead() {
-        if (head == null) {
-            return null;
-        }
-        
-        Item tmp = head;
-        if (head.next != null) {
-            head.next.prev = null;
-        }
-        head = head.next;
-        if (head == null) {
-            tail = null;
-        }
-        
-        return tmp;
-    }
-    
-    private Item removeTail() {
-        if (tail == null) {
-            return null;
-        }
-        
-        Item tmp = tail;
-        if (tail.prev != null) {
-            tail.prev.next = null;
-        }
-        tail = tail.prev;
-        if (tail == null) {
-            head = null;
-        }
-        
-        return tmp;
-    }
-    
-    private Item remove(Item item) {
-        if (item == head) {
-            return removeHead();
-        }
-        
-        if (item == tail) {
-            return removeTail();
-        }
-        
+    private Item remove(Item item) {        
         Item prev = item.prev;
         Item next = item.next;
         prev.next = next;
@@ -93,7 +46,9 @@ class LRUCache {
     Map<Integer, Item> map = new HashMap<>();
     int capacity;
     public LRUCache(int capacity) {
-        this.capacity = capacity;        
+        this.capacity = capacity;
+        head.next = tail;
+        tail.prev = head;
     }
     
     public int get(int key) {
@@ -111,7 +66,7 @@ class LRUCache {
         if (map.containsKey(key)) {
             remove(map.get(key));
         } else if (map.size() == capacity) {
-            Item t = removeTail();
+            Item t = remove(tail.prev);
             map.remove(t.key);
         }
         
