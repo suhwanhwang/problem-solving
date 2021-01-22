@@ -39,4 +39,55 @@ class Solution {
         list.get(list.size() - 1).next = null;
         return sortedHead;
     }
+    
+    
+    ListNode getMidNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode slowPrev = null;
+        while(fast != null && fast.next != null) {
+            slowPrev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (slowPrev != null) {
+            slowPrev.next = null;
+        }
+        return slow;
+    }
+    
+    ListNode mergeList(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode();
+        ListNode cur = dummy;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                cur.next = left; 
+                left = left.next;
+            } else {
+                cur.next = right;
+                right = right.next;
+            }
+            cur = cur.next;
+        }
+        if (left != null) {
+            cur.next = left;
+        } else if (right != null) {
+            cur.next = right;
+        }
+        
+        return dummy.next;
+    }
+
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode mid = getMidNode(head);
+        ListNode left = sortList(head);
+        ListNode right = sortList(mid);
+        
+        return mergeList(left, right);
+    }
+
 }
