@@ -51,11 +51,11 @@ class Solution {
     }
     
     int gcd(int a, int b) {
-	    int r = a % b;
-	    if (r == 0)
-		    return b;
-	    else
-		    return gcd(b, r);
+        int r = a % b;
+        if (r == 0)
+            return b;
+	else
+            return gcd(b, r);
     }
     
     public int maxPoints(int[][] points) {
@@ -65,8 +65,7 @@ class Solution {
         Map<Point, Integer> pointMap = new HashMap<>();
         for(int i = 0; i < points.length; ++i) {
             Point p = new Point(points[i][0], points[i][1]);
-            pointMap.put(p,
-            pointMap.getOrDefault(p,0) + 1);
+            pointMap.put(p, pointMap.getOrDefault(p,0) + 1);
         }
 
         int max = 0;
