@@ -22,39 +22,27 @@ class Solution {
         
         for(int i = 0; i < tokens.length; ++i) {
             String t = tokens[i];
-            if (t.length() == 1) {
-                char c = t.charAt(0);
-                int a,b;
-                switch(c) {
-                case '+':
-                    b = st.pop();
-                    a = st.pop();
-                    st.push(a + b);
-                    break;
-                case '-':
-                    b = st.pop();
-                    a = st.pop();
-                    st.push(a - b);
-                    break;
-                case '*':
-                    b = st.pop();
-                    a = st.pop();
-                    st.push(a * b);
-                    break;
-                case '/':
-                    b = st.pop();
-                    a = st.pop();
-                    st.push(a / b);
-                    break;
-                default :
-                st.push(Integer.parseInt(t));
-                }
+            int a,b;
+            if (t.equals("+")) {
+                b = st.pop();
+                a = st.pop();
+                st.push(a + b);
+            } else if (t.equals("-")) {
+                b = st.pop();
+                a = st.pop();
+                st.push(a - b);
+            } else if (t.equals("*")) {
+                b = st.pop();
+                a = st.pop();
+                st.push(a * b);
+            } else if (t.equals("/")) {
+                b = st.pop();
+                a = st.pop();
+                st.push(a / b);
             } else {
                 st.push(Integer.parseInt(t));
             }
-            System.out.println("stack " + st.peek());
         }
         return st.pop();
-        
     }
 }
