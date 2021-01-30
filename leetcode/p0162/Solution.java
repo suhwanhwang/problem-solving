@@ -16,7 +16,7 @@ Output: 2
 Explanation: 3 is a peak element and your function should return the index number 2.
 */
 class Solution {
-    public int findPeakElement(int[] nums) {
+    public int findPeakElement_n(int[] nums) {
         if (nums.length <= 1) {
             return 0;
         }
@@ -38,4 +38,22 @@ class Solution {
         }
         return -1;
     }
+
+    public int findPeakElement(int[] nums) {
+        return searchPeek(nums, 0, nums.length - 1);
+    }
+    
+    private int searchPeek(int[] nums, int s, int e) {
+        if (s == e) {
+            return s;
+        }
+        
+        int m = (s + e) >>> 1;
+        if (nums[m] > nums[m+1]) {
+            return searchPeek(nums, s, m);
+        } else {
+            return searchPeek(nums,m+1, e);
+        }
+    }
+
 }
