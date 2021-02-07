@@ -36,7 +36,7 @@ class Solution {
         
         return 1 + getCount(n/d, d);
     }
-    public int trailingZeroes(int n) {
+    public int trailingZeroes_(int n) {
         
         int twoCount = 0;
         int fiveCount = 0;
@@ -46,5 +46,15 @@ class Solution {
             fiveCount += getCount(i, 5);
         }
         return Math.min(twoCount, fiveCount);
+    }
+
+    public int trailingZeroes(int n) {
+        int fiveCount = 0;
+        
+        while (n >= 5) {
+            fiveCount += (n / 5);
+            n /= 5;
+        }
+        return fiveCount;
     }
 }
