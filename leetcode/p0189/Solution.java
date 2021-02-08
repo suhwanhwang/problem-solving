@@ -42,7 +42,7 @@ class Solution {
         nums[0] = tail;
     }
     
-    public void rotate(int[] nums, int k) {
+    public void rotate_n2(int[] nums, int k) {
         if (nums.length <= 1) {
             return;
         }
@@ -50,5 +50,25 @@ class Solution {
         for (int i = 0; i < k; ++i) {
             rotateRight(nums);
         }
+    }
+
+
+    private void reverse(int[] nums, int s, int e) {
+        
+        for(int i = s; i < s + (e-s)/2; ++i) {
+            int temp = nums[i];
+            int other = e - 1 - (i - s);
+            nums[i] = nums[other];
+            nums[other] = temp;
+        }
+    }
+    public void rotate(int[] nums, int k) {
+        if (nums.length <= 1) {
+            return ;
+        }
+        k %= nums.length;
+        reverse(nums, 0, nums.length);
+        reverse(nums, 0, k);
+        reverse(nums, k, nums.length);
     }
 }
