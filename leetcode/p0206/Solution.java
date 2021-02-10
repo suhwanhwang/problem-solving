@@ -23,14 +23,8 @@ A linked list can be reversed either iteratively or recursively. Could you imple
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return head;
-        }
-        
-        ListNode prev = head;
-        ListNode cur = head.next;
-        prev.next = null;
-        
+        ListNode prev = null;
+        ListNode cur = head;
         while (cur != null) {
             ListNode next = cur.next;
             cur.next = prev;
