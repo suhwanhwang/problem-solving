@@ -46,12 +46,10 @@ class Solution {
         
         int maxLen = 0;
         
-        for (int i = index; i < nums.length; ++i) {
-            if (prevIndex < 0 || nums[prevIndex] < nums[i]) {
-                maxLen = Math.max(maxLen, 1 + solve(nums, i + 1, i));
-            }
+        if (prevIndex < 0 || nums[prevIndex] < nums[index]) {
+            maxLen = 1 + solve(nums, index + 1, index);
         }
-        
+        maxLen = Math.max(maxLen, solve(nums, index + 1, prevIndex));
         dp[index][prevIndex + 1] = maxLen;
         return maxLen;
     }
