@@ -32,18 +32,17 @@ class Solution {
         ListNode p1 = d1;
         ListNode p2 = d2;
         ListNode cur = head;
-        ListNode l1 = head;
+        
         while(cur != null) {
             p1.next = cur;
             p2.next = cur.next;
 
             p1 = p1.next;
             p2 = p2.next;
-            l1 = p1;
-            cur =(cur.next != null ? cur.next.next : null);
-            
+
+            cur = (cur.next != null ? cur.next.next : null);            
         }
-        l1.next = d2.next;
+        p1.next = d2.next;
         return d1.next;
     }
 }
