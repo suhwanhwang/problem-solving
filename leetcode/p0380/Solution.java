@@ -36,9 +36,9 @@ There will be at least one element in the data structure when getRandom is calle
 */
 class RandomizedSet {
     
-    Random random = new Random();
-    Map<Integer, Integer> map = new HashMap<>();
-    List<Integer> list = new ArrayList<>();
+    private final Random random = new Random();
+    private final Map<Integer, Integer> map = new HashMap<>();
+    private final List<Integer> list = new ArrayList<>();
     
     /** Initialize your data structure here. */
     public RandomizedSet() {
