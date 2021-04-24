@@ -25,7 +25,7 @@ class Solution {
             return 0;
         }
         
-        if (dp[row][col] > 0) {
+        if (dp[row][col] != 0) {
             return dp[row][col];
         }
         
