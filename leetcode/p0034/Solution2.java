@@ -36,7 +36,7 @@ class Solution2 {
         int low = lowerBound(nums, target);
         int high = upperBound(nums, target);
         
-        if (nums.length == 0 || nums[low] != target) {
+        if (nums.length == 0 || low >= nums.length || nums[low] != target) {
             return new int[]{-1, -1};
         } else {
             return new int[]{low, high -1};
