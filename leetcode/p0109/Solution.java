@@ -57,33 +57,23 @@ The number of nodes in head is in the range [0, 2 * 104].
  */
 class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-        
-        List<Integer> list = new ArrayList<>();
-        ListNode cur = head;
-        while (cur != null) {
-            list.add(cur.val);
-            cur = cur.next;
-        }
-        
-        return helper(list, 0, list.size() - 1);
+        return helper(head, null);
     }
     
-    private TreeNode helper(List<Integer> list, int s, int e) {
-        if (s > e) {
+    private TreeNode helper(ListNode head, ListNode tail) {
+        if (head == tail) {
             return null;
         }
-        
-        if (s == e) {
-            return new TreeNode(list.get(s));
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != tail && fast.next != tail) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
         
-        int mid = (s + e) >>> 1;
-        TreeNode node = new TreeNode(list.get(mid));
-        node.left = helper(list, s, mid - 1);
-        node.right = helper(list, mid + 1, e);
+        TreeNode node = new TreeNode(slow.val);
+        node.left = helper(head, slow);
+        node.right = helper(slow.next, tail);
         return node;
     }
 }
