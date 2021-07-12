@@ -1,3 +1,6 @@
+/*
+https://leetcode.com/problems/isomorphic-strings/
+*/
 class Solution {
     public boolean isIsomorphic(String s, String t) {
         return convertInt(s).equals(convertInt(t));
