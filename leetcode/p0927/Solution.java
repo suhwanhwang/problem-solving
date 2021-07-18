@@ -1,3 +1,7 @@
+/*
+https://leetcode.com/problems/three-equal-parts/
+
+*/
 class Solution {
     public int[] threeEqualParts_bf(int[] arr) {
         
