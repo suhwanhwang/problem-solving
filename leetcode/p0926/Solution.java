@@ -12,7 +12,7 @@ class Solution {
         
         int min = s.length();
         for (int i = 0; i <= s.length(); ++i) {
-            int toZero = pre[i + 1];
+            int toZero = pre[i];
             int toOne = (s.length() - i) - (pre[s.length()] - pre[i]);
             min = Math.min(min, toZero+toOne);
         }
