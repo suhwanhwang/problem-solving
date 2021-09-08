@@ -12,7 +12,7 @@ class Solution {
         return new String(chars);
     }
     
-    public String shiftingLetters(String s, int[] shifts) {
+    public String shiftingLetters_(String s, int[] shifts) {
         long total = 0;
         for (int i = 0; i < shifts.length; ++i) {
             total += shifts[i];
@@ -31,4 +31,20 @@ class Solution {
         }
         return new String(chars);
     }
+
+    public String shiftingLetters(String s, int[] shifts) {
+        int total = 0;
+        for (int i = 0; i < shifts.length; ++i) {
+            total += shifts[i];
+            total %= 26;
+        }
+        
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < shifts.length; ++i) {
+            chars[i] = (char)(((chars[i] - 'a') + total) % 26 + 'a');
+            total = ((total + 26) -(shifts[i] % 26)) % 26;
+        }
+        return new String(chars);
+    }
+    
 }
