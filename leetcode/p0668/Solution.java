@@ -15,7 +15,7 @@ class Solution {
     }
     
     public int findKthNumber(int m, int n, int k) {
-        int lo = 1;
+        int lo = 0;
         int hi = m*n;
         
         while (lo < hi) {
