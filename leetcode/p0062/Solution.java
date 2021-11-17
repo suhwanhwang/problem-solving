@@ -1,22 +1,24 @@
 class Solution {
-    private int count;
-    public int uniquePaths_bf(int m, int n) {
-        count = 0;
-        dfs(m,n,1,1);
-        return count;
+    private int[][] dp;
+    public int uniquePaths(int m, int n) {
+        dp = new int[m + 1][n + 1];
+        return dfs(m,n,1,1);
     }
-    private void dfs(int m, int n, int r, int c) {
-        if(r > m || c > n) return
+    private int dfs(int m, int n, int r, int c) {
+        if(r > m || c > n) return 0;
         
         if(r == m && c == n) {
-            count ++;
-            return;
+            return 1;
         }
-        dfs(m,n,r+1,c);
+        if (dp[r][c] != 0) {
+            return dp[r][c];
+        }
+        dp[r][c] = dfs(m,n,r+1,c) +
         dfs(m,n,r,c+1);
+        return dp[r][c];
     }
     
-    public int uniquePaths(int m, int n) {
+    public int uniquePaths_bu(int m, int n) {
         int[][] dp = new int[m][n];
         
         for (int i = 0; i < m; ++i) {
