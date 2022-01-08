@@ -1,21 +1,23 @@
 class Solution {
+    class Transaction(val num: Int, val start:Int, val end:Int)
+    
     fun carPooling(trips: Array<IntArray>, capacity: Int): Boolean {
-        val sorted = trips.sortedBy { it[1] }
-        val pq = PriorityQueue<Int> { i0, i1 ->
-            sorted[i0][2] - sorted[i1][2]
-        }
         var curCapacity = 0
-        var max = 0
-        for ((i, t) in sorted.withIndex()) {
-            while(!pq.isEmpty() && sorted[pq.peek()][2] <= t[1]) {
-                curCapacity -= sorted[pq.poll()][0]
-            }
-            
-            pq.offer(i)
-            curCapacity += sorted[i][0]
-            
-            max = Math.max(max, curCapacity);
+        var maxCapacity = 0
+        val pq = PriorityQueue<Transaction> { t1, t2 ->
+            t1.end - t2.end 
         }
-        return max <= capacity
+        trips
+            .map { Transaction(it[0], it[1], it[2])}
+            .sortedBy { it.start }
+            .forEach {
+                while(!pq.isEmpty() && pq.peek().end <= it.start) {
+                    curCapacity -= pq.poll().num
+                }
+                pq.offer(it)
+                curCapacity += it.num
+                maxCapacity = Math.max(maxCapacity, curCapacity);
+            }
+        return maxCapacity <= capacity
     }
 }
