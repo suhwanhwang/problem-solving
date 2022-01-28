@@ -1,47 +1,48 @@
 class WordDictionary {
     static class TrieNode {
         boolean isEnd;
-        TrieNode[] child = new TrieNode[27];
+        TrieNode[] child = new TrieNode[26];
     }
     
     private TrieNode root = new TrieNode();
     
-    private static final int DOT = 26;
-
     public WordDictionary() {
         
     }
     
     public void addWord(String word) {
-        addWord(root, word, 0);
-    }
-    
-    private void addWord(TrieNode cur, String word, int index) {
-        if (index >= word.length()) {
-            cur.isEnd = true;
-            return;
-        }
-        
-        char c = word.charAt(index);
-        if (cur.child[c - 'a'] == null) {
-            cur.child[c - 'a'] = new TrieNode();
-        }
-        if (cur.child[DOT] == null) {
-            cur.child[DOT] = new TrieNode();
-        }
-        addWord(cur.child[c - 'a'], word, index + 1);
-        addWord(cur.child[DOT], word, index + 1);
-    }
-    
-    public boolean search(String word) {
         TrieNode cur = root;
         
         for (char c : word.toCharArray()) {
-            int index = (c == '.' ? DOT : c - 'a');
+            int index = c - 'a';
             if (cur.child[index] == null) {
-                return false;
+                cur.child[index] = new TrieNode();
             }
             cur = cur.child[index];
+        }
+        cur.isEnd = true;
+    }
+    
+    public boolean search(String word) {
+        return search(root, word);
+    }
+     
+    public boolean search(TrieNode node, String word) {
+        TrieNode cur = node;
+        
+        for (int i = 0; i < word.length(); ++i) {
+            char c = word.charAt(i);
+            if (c == '.') {
+                for (int j = 0; j < cur.child.length; ++j) {
+                    if (cur.child[j] != null && search(cur.child[j], word.substring(i + 1))) {
+                        return true;
+                    }
+                }
+                return false;
+            } else if (cur.child[c - 'a'] == null) {
+                return false;
+            }
+            cur = cur.child[c - 'a'];
         }
         return cur.isEnd;     
     }
