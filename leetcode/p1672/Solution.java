@@ -11,3 +11,12 @@ class Solution {
         return max;
     }
 }
+
+class Solution {
+    public int maximumWealth(int[][] accounts) {
+         return Arrays.stream(accounts)
+            .map(account -> Arrays.stream(account).sum())
+            .max(Comparator.comparing(x -> x))
+             .orElse(0);
+    }
+}
