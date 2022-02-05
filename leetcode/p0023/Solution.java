@@ -42,7 +42,7 @@ class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         ListNode dummy = new ListNode();
         ListNode prev = dummy;
-        Queue<ListNode> pq = new PriorityQueue<>((a, b) -> { return a.val - b.val; });
+        Queue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
         for(int i = 0; i < lists.length; ++i) {
             if (lists[i] != null) {
                 pq.offer(lists[i]);
