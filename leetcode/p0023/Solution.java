@@ -9,7 +9,7 @@
  * }
  */
 class Solution {
-    public ListNode mergeKLists(ListNode[] lists) {
+    public ListNode mergeKLists_bf(ListNode[] lists) {
         ListNode dummy = new ListNode();
         ListNode prev = dummy;
         ListNode cur[] = new ListNode[lists.length];
@@ -33,6 +33,27 @@ class Solution {
                 break;
             }
             cur[minIndex] = cur[minIndex].next;
+            prev.next = min;
+            prev = min;
+        }
+        return dummy.next;
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy = new ListNode();
+        ListNode prev = dummy;
+        Queue<ListNode> pq = new PriorityQueue<>((a, b) -> { return a.val - b.val; });
+        for(int i = 0; i < lists.length; ++i) {
+            if (lists[i] != null) {
+                pq.offer(lists[i]);
+            }
+        }
+
+        while (!pq.isEmpty()) {
+            ListNode min = pq.poll();
+            if(min.next != null) {
+                pq.offer(min.next);
+            }
             prev.next = min;
             prev = min;
         }
