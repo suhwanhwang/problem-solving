@@ -5,10 +5,7 @@ class Solution {
         list.add(beginWord)
         list.addAll(wordList)
         
-        val adj = mutableListOf<MutableList<Int>>()
-        for (i in 0 until list.size) {
-            adj.add(mutableListOf<Int>())
-        }
+        val adj = MutableList<MutableList<Int>>(list.size) { mutableListOf<Int>() }
         for (i in 0 until list.size - 1) {
             for (j in i + 1 until list.size) {
                 if (!canTrans(list[i], list[j])) {
