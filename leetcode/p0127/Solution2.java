@@ -45,9 +45,10 @@ class Solution {
         Queue<Integer> queue = new ArrayDeque<>();
         queue.offer(start);
         visited[start] = true;
-        int dist = 1;
+        int dist = 0;
         while (!queue.isEmpty()) {
             int len = queue.size();
+            dist++;
             while (len-- > 0) {
                 int cur = queue.poll();
                 if (cur == end) {
@@ -61,7 +62,6 @@ class Solution {
                     visited[next] = true;
                 }
             }
-            dist++;
         }
         return 0;
     }
