@@ -8,27 +8,11 @@ class Solution {
             }
         }
         //println(map)
-        var value = 0
-        for ((k,v) in map) {
-            if (v == tops.size) {
-                value = k
-                break
-            }
-        }
-        if (value == 0) return -1
+        var values = map.filter { it.value == tops.size }.map { it.key }
+        if (values.size == 0) return -1
         
-        var countTop = 0
-        for (t in tops) {
-            if (t != value) {
-                countTop++
-            }
-        }
-        var countBottom = 0
-        for (b in bottoms) {
-            if (b != value) {
-                countBottom++
-            }
-        }
+        var countTop = tops.count { it != values[0] }
+        var countBottom = bottoms.count { it != values[0] }
         return Math.min(countTop, countBottom)
     }
 }
