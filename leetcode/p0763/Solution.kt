@@ -1,8 +1,8 @@
 class Solution {
     fun partitionLabels(s: String): List<Int> {
         val lastPosition = mutableMapOf<Char, Int>()
-        for (i in s.indices) {
-            lastPosition[s[i]] = i
+        for ((i, c) in s.withIndex()) {
+            lastPosition[c] = i
         }
         
         val ans = mutableListOf<Int>()
