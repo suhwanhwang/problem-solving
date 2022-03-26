@@ -3,7 +3,7 @@ class Solution {
         var left = 0
         var right = nums.size - 1
         while (left <= right) {
-            val mid = left + (right - left) / 2
+            val mid = (left + right) ushr 1
             if (nums[mid] == target) {
                 return mid
             } else if (nums[mid] < target) {
