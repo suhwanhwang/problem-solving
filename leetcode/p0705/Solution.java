@@ -16,7 +16,8 @@ class MyHashSet {
         if (contains(key)) {
             return;
         } else {
-            table[getHash(key)].list.add(key);
+            Node node = getNode(key);
+            node.list.add(key);
         }
     }
     
