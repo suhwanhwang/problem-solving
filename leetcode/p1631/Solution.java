@@ -8,12 +8,15 @@ class Solution {
     };
     public int minimumEffortPath(int[][] heights) {
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-        boolean[][] visited = new boolean[heights.length][heights[0].length];
+        int[][] dist = new int[heights.length][heights[0].length];
+        for (int[] d: dist) {
+            Arrays.fill(d, Integer.MAX_VALUE);
+        }
         
+        dist[0][0] = 0;
         pq.offer(new int[]{0, 0, 0}); // row, col, weight
         while(!pq.isEmpty()) {
             int[] cur = pq.poll();
-            visited[cur[0]][cur[1]] = true;
             
             if (cur[0] == heights.length -1 && cur[1] == heights[0].length -1) {
                 return cur[2];
@@ -27,12 +30,12 @@ class Solution {
                     continue;
                 }
                 
-                if (visited[nr][nc]) {
+                int w = Math.max(cur[2], Math.abs(heights[cur[0]][cur[1]] - heights[nr][nc]));
+                if (dist[nr][nc] <= w) {
                     continue;
                 }
                 
-                int w = Math.max(cur[2], Math.abs(heights[cur[0]][cur[1]] - heights[nr][nc]));
-                //visited[nr][nc] = true;
+                dist[nr][nc] = w;
                 pq.offer(new int[] {nr, nc, w});
             }
         }
