@@ -1,6 +1,5 @@
 class Solution {
-    fun twoSum(numbers: IntArray, target: Int): IntArray {
-        val set = mutableSetOf<Int>()
+    fun twoSum_nlogn(numbers: IntArray, target: Int): IntArray {
         
         for (i in numbers.indices) {
             val t = target - numbers[i]
@@ -27,5 +26,22 @@ class Solution {
             }
         }
         return -1
+    }
+    
+    fun twoSum(numbers: IntArray, target: Int): IntArray {
+        var l = 0
+        var r = numbers.size - 1
+        
+        while (l < r) {
+            val n = numbers[l] + numbers[r]
+            if (n == target) {
+                return intArrayOf(l+1, r+1)
+            } else if (n < target) {
+                l++
+            } else {
+                r--
+            }
+        }
+        return intArrayOf(-1,-1)
     }
 }
