@@ -23,9 +23,9 @@ class Solution {
         dfs(root.left, root)
         dfs(root.right, root)
         
-        if (((parent == null) and !set.contains(root)) 
-            or !set.contains(root.left)
-           or !set.contains(root.right)) {
+        if (parent == null && !set.contains(root)
+            || !set.contains(root.left)
+            || !set.contains(root.right)) {
             ans++
             set.add(root)
             set.add(parent)
