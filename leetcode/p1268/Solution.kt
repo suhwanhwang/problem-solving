@@ -26,7 +26,7 @@ class Solution {
     private fun search(root: TrieNode, s: String): List<List<String>>{
         val ans = mutableListOf<List<String>>()
         var cur = root
-        for ((index, c) in s.withIndex()) {
+        for (c in s) {
             var node = cur.child[c - 'a']
             if (node == null) {
                 node = TrieNode()
