@@ -19,7 +19,8 @@ class Solution {
         // compare
         ListNode first = head;
         ListNode second = reversed;
-        
+        print(first);
+        print(second);
         while(first != null && second != null) {
             if (first.val != second.val) {
                 return false;
@@ -55,12 +56,8 @@ fast.next               ^
             slow = slow.next;
             fast = fast.next.next;
         }
-        
         if (prev != null) {
             prev.next = null;
-            if (fast != null) {
-                slow = slow.next;
-            }
         }
         return slow;
     }
