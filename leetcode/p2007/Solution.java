@@ -6,19 +6,20 @@ class Solution {
         List<Integer> list = new ArrayList<>();
         Arrays.sort(changed);
         for (int num : changed) {
-            if (num != 0 && num % 2 == 0) {
+            if (num % 2 == 0) {
                 if (map.getOrDefault(num / 2, 0) > 0) {
                     map.put(num / 2, map.getOrDefault(num / 2, 0) - 1);
                     list.add(num / 2);
                     continue;
                 }
             }
-            
+            /*
             if (map.getOrDefault(num * 2, 0) > 0) {
                 map.put(num * 2, map.getOrDefault(num * 2, 0) - 1);
                 list.add(num);
                 continue;
             } 
+*/
             
             map.put(num, map.getOrDefault(num,0) + 1);
         }
