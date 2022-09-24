@@ -11,19 +11,6 @@ set     0 3
 sum     4
     
     */
-class Solution {
-    /*
-
-queries = [[1,0],[-3,1],[-4,0],[2,3]]
-                                ^
-
-        0   1 2 3
-nums = [-2,-1,3,6]
-
-set     0 3
-sum     4
-    
-    */
     public int[] sumEvenAfterQueries(int[] nums, int[][] queries) {
         int sum = 0;
         for (int i = 0; i < nums.length; ++i) {
@@ -52,5 +39,4 @@ sum     4
         }
         return ans;
     }
-}
 }
