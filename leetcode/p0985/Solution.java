@@ -11,13 +11,23 @@ set     0 3
 sum     4
     
     */
+class Solution {
+    /*
+
+queries = [[1,0],[-3,1],[-4,0],[2,3]]
+                                ^
+
+        0   1 2 3
+nums = [-2,-1,3,6]
+
+set     0 3
+sum     4
+    
+    */
     public int[] sumEvenAfterQueries(int[] nums, int[][] queries) {
-        
-        Set<Integer> evenIndexSet = new HashSet<>();
         int sum = 0;
         for (int i = 0; i < nums.length; ++i) {
             if (nums[i] % 2 == 0) {
-                evenIndexSet.add(i);
                 sum += nums[i];
             }
         }
@@ -28,20 +38,19 @@ sum     4
             int val = queries[i][0];
             int index = queries[i][1];
                 
-            if (evenIndexSet.contains(index)) {
+            if (nums[index] % 2 == 0) {
                 sum -= nums[index];   
             }
             
             nums[index] += val;
             
             if (nums[index] % 2 == 0) {
-                evenIndexSet.add(index);
                 sum += nums[index];
-            } else {
-                evenIndexSet.remove(index);
             }
+            
             ans[i] = sum;
         }
         return ans;
     }
+}
 }
