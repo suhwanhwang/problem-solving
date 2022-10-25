@@ -29,33 +29,33 @@ class Solution {
             return true;
         }
         
-        if (board[row][col] == '.') {
-            for (int i = 1; i <= 9; ++i) {
-                if (rowSet[row].contains(i) 
-                || colSet[col].contains(i)
-                || rectSet[3 * (row/3) + (col/3)].contains(i)) {
-                    continue;
-                }
-                board[row][col] = (char)('0' + i);
-                rowSet[row].add(i);
-                colSet[col].add(i);
-                rectSet[3 * (row/3) + (col/3)].add(i);
-                int nr = (col == 8 ? row + 1 : row);
-                int nc = (col == 8 ? 0 : col + 1);
-                if (solve(board, nr , nc)) {
-                    return true;
-                }
-                
-                rowSet[row].remove(i);
-                colSet[col].remove(i);
-                rectSet[3 * (row/3) + (col/3)].remove(i);
-                board[row][col] = '.';
-            }
-            return false;
-        } else {
-            int nr = (col == 8 ? row + 1 : row);
-            int nc = (col == 8 ? 0 : col + 1);
+        int nr = (col == 8 ? row + 1 : row);
+        int nc = (col == 8 ? 0 : col + 1);
+        
+        if (board[row][col] != '.') {
             return solve(board, nr , nc);
         }
+        
+        for (int i = 1; i <= 9; ++i) {
+            if (rowSet[row].contains(i) 
+            || colSet[col].contains(i)
+            || rectSet[3 * (row/3) + (col/3)].contains(i)) {
+                continue;
+            }
+            board[row][col] = (char)('0' + i);
+            rowSet[row].add(i);
+            colSet[col].add(i);
+            rectSet[3 * (row/3) + (col/3)].add(i);
+                
+            if (solve(board, nr , nc)) {
+                return true;
+            }
+                
+            rowSet[row].remove(i);
+            colSet[col].remove(i);
+            rectSet[3 * (row/3) + (col/3)].remove(i);
+            board[row][col] = '.';
+        }
+        return false;
     }
 }
