@@ -1,4 +1,5 @@
 class Solution {
+    //  brute-force
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
         List<List<Integer>> adj = new ArrayList<>();
         for(int i = 0; i < n; ++i) {
