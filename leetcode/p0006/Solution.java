@@ -33,15 +33,12 @@ r: 5
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < numRows; ++i) {
-
             for (int j = i; j < s.length() ; j += w) {
-                if (i == 0 || i == numRows - 1) {
-                    sb.append(s.charAt(j));
-
-                } else {
-                    sb.append(s.charAt(j));
-                    if (j + w - 2 * i < s.length()) {
-                        sb.append(s.charAt(j + w - 2 * i));
+                sb.append(s.charAt(j));
+                if (i != 0 && i != numRows - 1) {
+                    int index = j + w - 2 * i;
+                    if (index < s.length()) {
+                        sb.append(s.charAt(index));
                     }
                 }
             }
