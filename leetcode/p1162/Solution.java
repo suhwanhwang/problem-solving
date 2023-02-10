@@ -3,7 +3,7 @@ class Solution {
     private static final int[][] DIR = {
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}
     };
-    public int maxDistance(int[][] grid) {
+    public int maxDistance_dfs(int[][] grid) {
         final int[][] distance = new int[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; ++i) {
@@ -46,5 +46,42 @@ class Solution {
             }
             dfs(distance, nr, nc, depth + 1);    
         }
+    }
+
+    public int maxDistance(int[][] grid) {
+        Queue<int[]> queue = new ArrayDeque<>();
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                if (grid[i][j] == 1) {
+                    queue.add(new int[]{i, j});
+                    visited[i][j] = true;
+                }
+            }
+        }
+
+        int depth = 0;
+        while(!queue.isEmpty()) {
+            int len = queue.size();
+            while(len-- > 0) {
+                int[] cur = queue.poll();
+
+                for (int[] d : DIR) {
+                    int nr = cur[0] + d[0];
+                    int nc = cur[1] + d[1];
+                    if (nr < 0 || nr >= grid.length 
+                        || nc < 0 || nc >= grid[0].length
+                        || visited[nr][nc]) {
+                        continue;
+                    }
+                    queue.add(new int[]{nr, nc});
+                    visited[nr][nc] = true;
+                }
+
+            }
+            depth++;
+        }
+        return depth <= 1 ? -1 : depth - 1;
     }
 }
