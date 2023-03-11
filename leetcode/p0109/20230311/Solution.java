@@ -25,38 +25,35 @@
  */
 class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        if (head == null) {
+        return sortedListToBST(head, null);
+    }
+    private TreeNode sortedListToBST(ListNode head, ListNode tail) {
+        if (head == tail) {
             return null;
         }
-        if (head.next == null) {
+        if (head.next == tail) {
             return new TreeNode(head.val);
         }
 
-        ListNode mid = splitNode(head);
+        ListNode mid = splitNode(head, tail);
         ListNode midNext = mid.next;
-        mid.next = null;
 
         TreeNode tree = new TreeNode(mid.val);
-        tree.left = sortedListToBST(head);
-        tree.right = sortedListToBST(midNext);
+        tree.left = sortedListToBST(head, mid);
+        tree.right = sortedListToBST(midNext, tail);
         return tree;
     }
 
-    private ListNode splitNode(ListNode node) {
+    private ListNode splitNode(ListNode node, ListNode tail) {
         if (node == null) {
             return null;
         }
 
-        ListNode prev = null;
         ListNode slow = node;
         ListNode fast = node;
-        while (fast != null && fast.next != null) {
-            prev = slow;
+        while (fast != tail && fast.next != tail) {
             slow = slow.next;
             fast = fast.next.next;
-        }
-        if (prev != null) {
-            prev.next = null;
         }
         return slow;
     }
