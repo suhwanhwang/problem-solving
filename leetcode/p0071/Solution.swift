@@ -1,55 +1,20 @@
 class Solution {
     func simplifyPath(_ path: String) -> String {
-        var charArray = [Character]()
-        var token = [Character]()
+        let tokens = path.components(separatedBy: ["/"])
+        var simplify = [String]()
 
-        for c in path {
-            if c == "/" {
-                if token.isEmpty {
-                    if charArray.isEmpty {
-                        charArray.append(c)
-                    } else if charArray.last == "/" {
-                        // ignore
-                    }
-                } else {
-                    if String(token) == "." {
-                        // ignore
-                    } else if String(token) == ".." {
-                        if charArray.count > 1 {
-                            charArray.removeLast()
-                        }
-                        while charArray.last != "/" {
-                            charArray.removeLast()
-                        }
-                    } else {
-                        for ch in token {
-                            charArray.append(ch)
-                        }
-                        charArray.append(c)
-                    }
+        for t in tokens {
+            if t == "" || t == "." {
+                // ignore
+            } else if t == ".." {
+                if simplify.count > 0 {
+                    simplify.removeLast()
                 }
-                token = [Character]()
             } else {
-                token.append(c)
+                simplify.append(t)
             }
         }
-        if String(token) == ".." {
-            if charArray.count > 1 {
-                charArray.removeLast()
-            }
-            while charArray.last != "/" {
-                charArray.removeLast()
-            }
-        } else if String(token) == "." {
-            // ignore
-        } else {
-            for ch in token {
-                charArray.append(ch)
-            }
-        }
-        if charArray.count > 1 && charArray.last == "/" {
-            charArray.removeLast()
-        }
-        return String(charArray)
+
+        return "/" + simplify.joined(separator: "/")
     }
 }
