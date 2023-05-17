@@ -39,9 +39,9 @@ class Solution {
         var prev:ListNode? = nil
         var cur = head
         while cur != nil {
-            var next = cur!.next
-            cur!.next = prev
-            prev = cur!
+            var next = cur?.next
+            cur?.next = prev
+            prev = cur
             cur = next
         }
         return prev
