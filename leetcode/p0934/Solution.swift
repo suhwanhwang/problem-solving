@@ -40,14 +40,14 @@ class Solution {
                 let nr = row + d[0]
                 let nc = col + d[1]
 
-                if nr < 0 || nr >= gridCopy.count || nc < 0 || nc >= gridCopy[0].count {
+                if nr < 0 || nr >= gridCopy.count || nc < 0 || nc >= gridCopy[0].count || gridCopy[nr][nc] == landNum {
                     continue
                 }
                 if visited[nr][nc] {
                     continue
                 }
 
-                queue.append((nr, nc, gridCopy[nr][nc] == landNum ? 0 : depth + 1))
+                queue.append((nr, nc, depth + 1))
                 visited[nr][nc] = true
             }
         }
