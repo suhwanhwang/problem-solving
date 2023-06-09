@@ -8,7 +8,6 @@ m   ^
     */
     func nextGreatestLetter(_ letters: [Character], _ target: Character) -> Character {
         let first = letters[0]
-        let letters = letters.sorted()
         let n = letters.count
 
         var left = 0
