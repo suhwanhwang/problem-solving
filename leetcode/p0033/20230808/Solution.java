@@ -10,9 +10,6 @@ class Solution {
     }
 
     private int helper(int[] nums, int target, int left, int right) {
-        if (left > right || right >= nums.length) {
-            return -1;
-        }
         if (left == right) {
             return nums[left] == target ? left : -1;
         }
