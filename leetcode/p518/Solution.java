@@ -8,24 +8,25 @@ class Solution {
         return helper(amount, coins, 0);
     }
     
-    private int helper(int remain, int[] coins, int prevIndex) {
+    private int helper(int remain, int[] coins, int index) {
+        if (index >= coins.length) {
+            return 0;
+        }
+        
         if (remain == 0) {
-            dp[remain][prevIndex] = 1;
             return 1;
         }
         
-        if (dp[remain][prevIndex] != -1) {
-            return dp[remain][prevIndex];
+        if (dp[remain][index] != -1) {
+            return dp[remain][index];
         }
         
         int sum = 0;
-        for (int i = prevIndex; i < coins.length; ++i) {
-            if (remain < coins[i]) {
-                continue;
-            }
-            sum += helper(remain - coins[i], coins, i);
+        if (coins[index] <= remain) {
+            sum = helper(remain - coins[index], coins, index);
         }
-        dp[remain][prevIndex] = sum;
+        sum += helper(remain, coins, index + 1);
+        dp[remain][index] = sum;
         return sum;
     }
 }
