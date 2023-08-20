@@ -9,11 +9,8 @@ class Solution {
     }
     
     private int helper(int remain, int[] coins, int prevIndex) {
-        if (remain < 0) {
-            return 0;
-        }
-        
         if (remain == 0) {
+            dp[remain][prevIndex] = 1;
             return 1;
         }
         
@@ -23,6 +20,9 @@ class Solution {
         
         int sum = 0;
         for (int i = prevIndex; i < coins.length; ++i) {
+            if (remain < coins[i]) {
+                continue;
+            }
             sum += helper(remain - coins[i], coins, i);
         }
         dp[remain][prevIndex] = sum;
