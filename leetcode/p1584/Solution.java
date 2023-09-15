@@ -1,6 +1,6 @@
 class Solution {
     private int[] roots;
-    
+    private int[] ranks;
     public int minCostConnectPoints(int[][] points) {
         int n = points.length;
         List<List<Integer>> distances = new ArrayList<>();
@@ -17,17 +17,23 @@ class Solution {
                               
         // init union find
         roots = new int[n];
+        ranks = new int[n];
         for (int i = 0; i < n; ++i) {
             roots[i] = i;
         }
         
         int sum = 0;
+        int num = 0;
         for (List<Integer> distance : distances) {
             if (find(distance.get(1), distance.get(2))) {
                 continue;
             }
             connect(distance.get(1), distance.get(2));
             sum += distance.get(0);
+            num++;
+            if (num == n - 1) {
+                break;
+            }
         }
         return sum;
     }
@@ -47,7 +53,13 @@ class Solution {
     private void connect(int u, int v) {
         int rootU = getRoot(u);
         int rootV = getRoot(v);
-        roots[rootU] = rootV;
+        if (ranks[rootU] < ranks[rootV]) {
+            roots[rootU] = rootV;
+            ranks[rootU]++;
+        } else {
+            roots[rootV] = rootU;
+            ranks[rootV]++;
+        }
     }
     
 }
