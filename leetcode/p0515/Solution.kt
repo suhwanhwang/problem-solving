@@ -20,8 +20,9 @@ class Solution {
         if (root == null) {
             return
         }
-        
-        if (!map.contains(depth) || map[depth]!! < root.`val`) {
+
+        val prev = map[depth]
+        if (prev == null || prev < root.`val`) {
             map[depth] = root.`val`
         }
         dfs(root.left, depth+1, map)
