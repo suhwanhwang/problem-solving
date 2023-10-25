@@ -30,7 +30,7 @@ class Solution {
         var invCount = 0
         var curK = k - 1
         var curLen = 2.0.pow(n - 1).toInt()
-        for (i in 2..n) {
+        for (i in n downTo 2) {
             if (curK >= curLen / 2) {
                 invCount += 1
                 curK -= curLen / 2
