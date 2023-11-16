@@ -1,0 +1,25 @@
+class Solution {
+    fun findDifferentBinaryString(nums: Array<String>): String {
+        val len = nums.size
+        val numSet = nums.toSet()
+        //println(numSet)
+        for (i in 0..100) {
+            val s = i.toBin(len)
+            if (!numSet.contains(s)) 
+                return s
+        }
+        return ""
+    }
+    
+    fun Int.toBin(len: Int): String  {
+        val chars = CharArray(len) {
+ '0' }
+        var mask = (1 shl len)
+        for (i in 0 until len) {
+            if (this and mask != 0)
+                chars[i] = '1'
+            mask = (mask shr 1)
+        }
+        return String(chars)
+    }
+}
