@@ -22,10 +22,10 @@ class Solution {
                 }
             }
         }
-        var total = 0
-        for (item in map.values) {
-            if (item.first > 0) total += item.first
-        }
-        return total
+        
+        return map.values
+            .map { it.first }
+            .filter { it > 0 }
+            .sum()
     }
 }
