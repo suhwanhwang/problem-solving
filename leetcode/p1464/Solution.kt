@@ -7,7 +7,7 @@ class Solution {
     fun maxProduct(nums: IntArray): Int {
         return nums
             .toList()
-            .sortedWith(Comparator.reverseOrder())
+            .sortedDescending()
             .take(2)
             .map { it - 1 }
             .fold(1) { prod, num -> prod * num }
