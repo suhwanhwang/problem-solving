@@ -11,10 +11,9 @@ class Solution {
         
         val list = listOf<MutableList<Int>>(mutableListOf<Int>(), mutableListOf<Int>())
         for (m in set) {
-            if (map[m] == null) {
-                list[0].add(m)
-            } else if (map[m] == 1) {
-                list[1].add(m)
+            val count = (map[m] ?: 0) 
+            if (count <= 1) {
+                list[count].add(m)
             }
         }
         return list
