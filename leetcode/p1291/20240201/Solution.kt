@@ -52,5 +52,26 @@ class Solution {
         }
         return next
     }
-    
+
+    fun sequentialDigits_clean(low: Int, high: Int): List<Int> {
+        val queue = ArrayDeque<Int>()
+        for (i in 1..9) {
+            queue.add(i)
+        }
+        
+        val list = mutableListOf<Int>()
+        while(!queue.isEmpty()) {
+            val num = queue.removeFirst()
+            
+            if (low <= num && num <= high) {
+                list.add(num)
+            }
+            
+            val lastDigit = num % 10
+            if (lastDigit != 9) {
+                queue.add(num * 10 + lastDigit + 1)
+            }
+        }
+        return list
+    }
 }
