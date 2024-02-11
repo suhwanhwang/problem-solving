@@ -2,14 +2,11 @@ class Solution {
     data class Position(val row: Int, val col: Int)
     private val dp = Array(71) {
         Array(71) {
-            Array(71) {
-                IntArray(71) { -1 }
-            }
+            IntArray(71) { -1 }
         }
     }
     
     fun cherryPickup(grid: Array<IntArray>): Int {
-        
         return helper(grid, Position(0, 0), Position(0, grid[0].size - 1))
     }
     
@@ -22,8 +19,8 @@ class Solution {
             return 0
         }
         
-        if (dp[p1.row][p1.col][p2.row][p2.col] != -1) {
-            return dp[p1.row][p1.col][p2.row][p2.col]
+        if (dp[p1.row][p1.col][p2.col] != -1) {
+            return dp[p1.row][p1.col][p2.col]
         }
         
         var max = 0
@@ -38,7 +35,7 @@ class Solution {
             sum += grid[p2.row][p2.col]
         }
         sum += max
-        dp[p1.row][p1.col][p2.row][p2.col] = sum
+        dp[p1.row][p1.col][p2.col] = sum
         return sum
     }
 }
