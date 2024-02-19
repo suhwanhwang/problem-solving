@@ -1,12 +1,15 @@
 class Solution {
-    public boolean isPowerOfTwo(int n) {
-        long num = 1;
-        for (int i = 0; i <= 32; ++i) {
-            if (num == n) {
-                return true;
-            }
-            num <<= 1;
+    fun isPowerOfTwo_(n: Int): Boolean {
+        if (n < 1) return false
+        
+        var num = 1L
+        while (num < n) {
+            num *= 2
         }
-        return false;
+        return num == n.toLong()
+    }
+
+    fun isPowerOfTwo(n: Int): Boolean {
+        return n > 0 && (n and (n - 1) == 0)
     }
 }
