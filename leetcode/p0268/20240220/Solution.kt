@@ -1,5 +1,5 @@
 class Solution {
-    fun missingNumber(nums: IntArray): Int {
+    fun missingNumber_(nums: IntArray): Int {
         nums.sort()
         
         for (i in 0 until nums.size) {
@@ -8,5 +8,9 @@ class Solution {
             }
         }
         return nums.size
+    }
+    
+    fun missingNumber(nums: IntArray): Int {
+        return nums.size * (nums.size + 1) / 2 - nums.sum()
     }
 }
