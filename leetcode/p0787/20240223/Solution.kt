@@ -1,33 +1,31 @@
 class Solution {
+    private data class Node(val city:Int, val price:Int, val stop:Int)
+    
     fun findCheapestPrice(n: Int, flights: Array<IntArray>, src: Int, dst: Int, k: Int): Int {
-        val adj = mutableMapOf<Int, Set<Pair<Int, Int>>>()
+        val adj = mutableMapOf<Int, Set<Node>>()
         
         for (flight in flights) {
             val from = flight[0]
             val to = flight[1]
             val price = flight[2]
-            adj[from] = (adj[from] ?: emptySet()) + Pair(to, price)
+            adj[from] = (adj[from] ?: emptySet()) + Node(to, price, 0)
         }
         
-        val queue = ArrayDeque<IntArray>()
+        val queue = ArrayDeque<Node>()
         val prices = IntArray(n + 1) { Int.MAX_VALUE }
-        queue.add(intArrayOf(src, 0, 0))
+        queue.add(Node(src, 0, 0))
         prices[src] = 0
         
         while (!queue.isEmpty()) {
             val cur = queue.removeFirst()
-            val curIndex = cur[0]
-            val curPrice = cur[1]
-            val curStop = cur[2]
             
-            if (curStop > k) continue
+            if (cur.stop > k) continue
             
-            for (next in adj[curIndex].orEmpty()) {
-                val nextIndex = next.first
-                val price = curPrice + next.second
-                if (prices[nextIndex] > price) {
-                    prices[nextIndex] = price
-                    queue.add(intArrayOf(nextIndex, price, curStop + 1))
+            for (next in adj[cur.city].orEmpty()) {
+                val price = cur.price + next.price
+                if (prices[next.city] > price) {
+                    prices[next.city] = price
+                    queue.add(Node(next.city, price, cur.stop + 1))
                 }
             }
         }
