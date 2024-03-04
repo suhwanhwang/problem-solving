@@ -11,7 +11,7 @@ class Solution {
                 p -= tokens[left]
                 score++
                 left++
-            } else if (left < right && score > 0 && p < tokens[right]) {
+            } else if (left < right && score > 0) {
                 score--
                 p += tokens[right]
                 right--
