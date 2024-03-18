@@ -1,5 +1,5 @@
 class Solution {
-    public int findMinArrowShots(int[][] points) {
+    public int findMinArrowShots_(int[][] points) {
         Arrays.sort(points, (a,b) -> {
             if (a[0] == b[0]) return Integer.compare(a[1], b[1]);
             return Integer.compare(a[0], b[0]);
@@ -17,5 +17,20 @@ class Solution {
             }
         }
         return count +1;
+    }
+
+    fun findMinArrowShots(points: Array<IntArray>): Int {
+        points.sortBy { it[0] }
+        var right = points[0][1]
+        var count = 0
+        for (i in 1 until points.size) {
+            if (points[i][0] <= right) {
+                right = min(right, points[i][1])
+            } else {
+                right = points[i][1]
+                count++
+            }
+        }
+        return count + 1
     }
 }
