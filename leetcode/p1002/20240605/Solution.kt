@@ -9,7 +9,7 @@ class Solution {
             }
         }
         val ans = mutableListOf<String>()
-        
+        /*
         for (i in 0..25) {
             for (j in 0 until map[i]) {
                 ans.add(('a' + i).toString())
@@ -17,6 +17,10 @@ class Solution {
         }
 
         return ans
+        */
+        return map.flatMapIndexed { i, v ->
+            List(v) { ('a' + i).toString() }
+        }
     }
 
     private fun getMap(s: String): IntArray {
