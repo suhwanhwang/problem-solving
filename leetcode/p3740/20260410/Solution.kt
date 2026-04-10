@@ -34,28 +34,24 @@ class Solution {
     }
 
     fun minimumDistance(nums: IntArray): Int {
-        val map = mutableMapOf<Int, List<Int>>()
+        val map = mutableMapOf<Int, MutableList<Int>>()
 
         for ((i, num) in nums.withIndex()) {
-            map[num] = (map[num] ?: emptyList()) + i
+            map.getOrPut(num) { mutableListOf<Int>() }.add(i)
         }
 
-        var minDist = -1
+        var minDist = Int.MAX_VALUE
         for ((key, list) in map) {
             if (list.size < 3) {
                 continue
             }
 
             for (j in 0 until (list.size - 2)) {
-                val dist = (list[j + 1] - list[j] + list[j + 2] - list[j + 1]) * 2
-                if (minDist == -1) {
-                    minDist = dist
-                } else {
-                    minDist = min(minDist, dist)
-                }
+                val dist = (list[j + 2] - list[j]) * 2
+                minDist = min(minDist, dist)
             }
         }
 
-        return minDist
+        return if (minDist == Int.MAX_VALUE) -1 else minDist
     }
 }
