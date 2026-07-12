@@ -1,5 +1,6 @@
 class Solution {
     fun arrayRankTransform(arr: IntArray): IntArray {
+        /* 
         val map = TreeMap<Int, MutableList<Int>>()
         for (i in arr.indices) {
             map.getOrPut(arr[i]) { mutableListOf() }.add(i)
@@ -14,5 +15,14 @@ class Solution {
             }
         }
         return ans
+        */
+
+        val map = mutableMapOf<Int, Int>()
+        for (num in arr.toSortedSet()) {
+            map[num] = map.size + 1
+        }
+        return IntArray(arr.size) {
+            map[arr[it]]!!
+        }
     }
 }
