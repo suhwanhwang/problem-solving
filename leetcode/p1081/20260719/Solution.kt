@@ -1,6 +1,7 @@
 class Solution {
     fun smallestSubsequence(s: String): String {
-        val stack = LinkedHashSet<Char>()
+        val stack = ArrayDeque<Char>()
+        val added = BooleanArray(26)
         val lastIndex = mutableMapOf<Char, Int>()
 
         for ((i, c) in s.withIndex()) {
@@ -8,14 +9,16 @@ class Solution {
         }
 
         for ((i, c) in s.withIndex()) {
-            if (stack.contains(c)) {
+            if (added[c - 'a']) {
                 continue
             }
 
             while (stack.isNotEmpty() && stack.last() > c && lastIndex[stack.last()]!! > i) {
-                stack.remove(stack.last())
+                added[stack.last() - 'a'] = false
+                stack.removeLast()
             }
-            stack.add(c)
+            added[c - 'a'] = true
+            stack.addLast(c)
         }
 
         return stack.joinToString("")
